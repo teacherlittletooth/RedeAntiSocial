@@ -1,4 +1,4 @@
-package br.qi.socialmedianoite
+package br.qi.socialmediatarde
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,15 +41,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.qi.socialmedianoite.ui.theme.SocialMediaNoiteTheme
+import br.qi.socialmediatarde.ui.theme.SocialMediaTardeTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            SocialMediaNoiteTheme {
-                // Aqui, vão os códigos
-                // que serão o App em si.
+            SocialMediaTardeTheme {
+                //Aqui vão os códigos que serão apresentados
+                //no dispositivos
             }
         }
     }
@@ -102,7 +103,7 @@ fun Post(
     modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = modifier.height(250.dp)
+        modifier = modifier.height(260.dp)
     ) {
         Image(
             painter = painterResource(id = image),
@@ -123,9 +124,9 @@ fun PostIcons(
             onClick = onChange
         ) {
             Icon(
-                imageVector = if(like) Icons.Filled.FavoriteBorder else Icons.Filled.Favorite,
+                imageVector = if(like) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
                 contentDescription = "Ícone de curtida",
-                tint = if(like) Color.Black else Color.Red
+                tint = if(like) Color.Red else Color.Black
             )
         }
 
@@ -140,13 +141,13 @@ fun PostIcons(
     }
 }
 
-//Componente para controle de estado do like
+// Componente para controle de estado do botão de like
 @Composable
 fun PostIconsState(
     modifier: Modifier = Modifier
 ) {
     var changeLike by remember {
-        mutableStateOf(true)
+        mutableStateOf(false)
     }
 
     PostIcons(
@@ -164,10 +165,11 @@ fun PostText(
         Text(
             text = text,
             maxLines = 2,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
         )
     }
 }
+
 
 @Composable
 fun PostPage(
@@ -193,11 +195,11 @@ fun PostPage(
     } // Column
 }
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 @Preview(showBackground = true)
 @Composable
 fun ProfileNamePreview() {
-    SocialMediaNoiteTheme {
+    SocialMediaTardeTheme {
         Column {
             ProfileName(
                 image = R.drawable.ic_launcher_foreground,
@@ -211,7 +213,7 @@ fun ProfileNamePreview() {
 @Preview(showBackground = true)
 @Composable
 fun PostPreview() {
-    SocialMediaNoiteTheme {
+    SocialMediaTardeTheme {
         Post(image = R.drawable.ic_launcher_background)
     }
 }
@@ -219,7 +221,7 @@ fun PostPreview() {
 @Preview(showBackground = true)
 @Composable
 fun PostIconsPreview() {
-    SocialMediaNoiteTheme {
+    SocialMediaTardeTheme {
         PostIconsState()
     }
 }
@@ -227,23 +229,21 @@ fun PostIconsPreview() {
 @Preview(showBackground = true)
 @Composable
 fun PostTextPreview() {
-    SocialMediaNoiteTheme {
-        PostText(
-            text = "Nossa, nossa: assim você me mata. Ai, se eu te pego, ai, ai, se eu te pego. Delícia, delícia, assim você me mata. Teló - Michel (2015)"
-        )
+    SocialMediaTardeTheme {
+        PostText(text = "Hino do Rio Grande do Sul: Como a aurora precursora do farol da divindade, foi o vinte de setembro o precursor da liberdade!")
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PostPagePreview() {
-    SocialMediaNoiteTheme {
+    SocialMediaTardeTheme {
         PostPage(
             imageProfile = R.drawable.ic_launcher_foreground,
-            nameProfile = "Cristaldo",
-            timeProfile = "2 min atrás",
+            nameProfile = "Astolfo Ortega",
+            timeProfile = "30 minutos atrás",
             imagePost = R.drawable.ic_launcher_background,
-            textPost = "Imagens del gramadito del estadio onde nosotros estamos jugando soccer."
+            textPost = "Hino do Rio Grande do Sul: Como a aurora precursora do farol da divindade, foi o vinte de setembro o precursor da liberdade!"
         )
     }
 }
