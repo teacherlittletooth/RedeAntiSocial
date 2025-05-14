@@ -1,4 +1,4 @@
-package br.qi.socialmediatarde
+package br.com.redeantisocialtarde
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,51 +33,48 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.qi.socialmediatarde.ui.theme.SocialMediaTardeTheme
+import br.com.redeantisocialtarde.ui.theme.RedeAntiSocialTardeTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            SocialMediaTardeTheme {
-                //Aqui vão os códigos que serão apresentados
-                //no dispositivos
+            RedeAntiSocialTardeTheme {
+                //Aqui vai o código que será
+                //lançado para o celular
             }
         }
     }
 }
 
 @Composable
-fun ProfileName(
-    @DrawableRes image : Int,
-    name : String,
-    time : String,
-    modifier : Modifier = Modifier
+fun PostUser(
+    @DrawableRes image: Int,
+    name: String,
+    time: String,
+    modifier: Modifier = Modifier
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Image(
             painter = painterResource(id = image),
-            contentDescription = "Foto do perfil",
-            contentScale = ContentScale.FillBounds,
+            contentDescription = "Imagem de perfil",
             modifier = modifier
-                .size(46.dp)
+                .size(42.dp)
                 .clip(CircleShape)
                 .border(
-                    width = 2.dp,
-                    color = Color.Gray,
+                    width = 1.6.dp,
+                    color = Color.Blue,
                     shape = CircleShape
                 )
         )
 
         Spacer(
-            modifier = Modifier.padding(horizontal = 6.dp)
+            modifier = modifier.padding(horizontal = 4.dp)
         )
 
         Column {
@@ -90,15 +86,14 @@ fun ProfileName(
 
             Text(
                 text = time,
-                color = Color.Gray,
-                fontSize = 12.sp
+                color = Color.Gray
             )
         }
-    }
-}
+    }//Row
+}//PostUser
 
 @Composable
-fun Post(
+fun PostImage(
     @DrawableRes image: Int,
     modifier: Modifier = Modifier
 ) {
@@ -107,11 +102,11 @@ fun Post(
     ) {
         Image(
             painter = painterResource(id = image),
-            contentDescription = "Imagem do post",
+            contentDescription = "Foto da postagem",
             modifier = modifier.fillMaxSize()
         )
     }
-}
+}//PostImage
 
 @Composable
 fun PostIcons(
@@ -138,21 +133,21 @@ fun PostIcons(
                 contentDescription = "Ícone de comentário"
             )
         }
-    }
-}
+    }//Row
+}//PostIcons
 
-// Componente para controle de estado do botão de like
+//Componente para controle de estado
 @Composable
 fun PostIconsState(
     modifier: Modifier = Modifier
 ) {
-    var changeLike by remember {
+    var likeChange by remember {
         mutableStateOf(false)
     }
 
     PostIcons(
-        like = changeLike,
-        onChange = { changeLike = !changeLike }
+        like = likeChange,
+        onChange = { likeChange = !likeChange }
     )
 }
 
@@ -162,88 +157,77 @@ fun PostText(
     modifier: Modifier = Modifier
 ) {
     Box {
-        Text(
-            text = text,
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis,
-        )
+        Text(text = text)
     }
 }
 
-
 @Composable
 fun PostPage(
-    @DrawableRes imageProfile: Int,
-    nameProfile: String,
-    timeProfile: String,
+    @DrawableRes imageUser: Int,
+    nameUser: String,
+    timeUser: String,
     @DrawableRes imagePost: Int,
     textPost: String,
     modifier: Modifier = Modifier
 ) {
     Column {
-        ProfileName(
-            image = imageProfile,
-            name = nameProfile,
-            time = timeProfile
+        PostUser(
+            image = imageUser,
+            name = nameUser,
+            time = timeUser
         )
 
-        Post(image = imagePost)
+        PostImage(
+            image = imagePost
+        )
 
         PostIconsState()
 
-        PostText(text = textPost)
-    } // Column
+        PostText(
+            text = textPost
+        )
+    }//Column
 }
 
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////
 @Preview(showBackground = true)
 @Composable
-fun ProfileNamePreview() {
-    SocialMediaTardeTheme {
-        Column {
-            ProfileName(
-                image = R.drawable.ic_launcher_foreground,
-                name = "Chaves",
-                time = "2 horas atrás"
-            )
-        }
+fun PostUserPreview() {
+    RedeAntiSocialTardeTheme {
+        PostUser(
+            image = R.drawable.ic_launcher_foreground,
+            name = "Oswaldir Prado",
+            time = "2 horas atrás"
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PostPreview() {
-    SocialMediaTardeTheme {
-        Post(image = R.drawable.ic_launcher_background)
+fun PostImagePreview() {
+    RedeAntiSocialTardeTheme {
+        PostImage(image = R.drawable.ic_launcher_background)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PostIconsPreview() {
-    SocialMediaTardeTheme {
+    RedeAntiSocialTardeTheme {
         PostIconsState()
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PostTextPreview() {
-    SocialMediaTardeTheme {
-        PostText(text = "Hino do Rio Grande do Sul: Como a aurora precursora do farol da divindade, foi o vinte de setembro o precursor da liberdade!")
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
 fun PostPagePreview() {
-    SocialMediaTardeTheme {
+    RedeAntiSocialTardeTheme {
         PostPage(
-            imageProfile = R.drawable.ic_launcher_foreground,
-            nameProfile = "Astolfo Ortega",
-            timeProfile = "30 minutos atrás",
+            imageUser = R.drawable.ic_launcher_foreground,
+            nameUser = "Chin Zuang",
+            timeUser = "3 minutos atrás",
             imagePost = R.drawable.ic_launcher_background,
-            textPost = "Hino do Rio Grande do Sul: Como a aurora precursora do farol da divindade, foi o vinte de setembro o precursor da liberdade!"
+            textPost = "Fotos da viagem à marte!"
         )
     }
 }
