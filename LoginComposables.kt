@@ -1,23 +1,21 @@
-package br.qi.socialmedianoite
+package br.com.redeantisocialtarde
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AccountCircle
-import androidx.compose.material.icons.outlined.Clear
-import androidx.compose.material.icons.outlined.Done
-import androidx.compose.material.icons.outlined.Lock
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
@@ -26,7 +24,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.qi.socialmedianoite.ui.theme.SocialMediaNoiteTheme
+import androidx.compose.ui.unit.sp
+import br.com.redeantisocialtarde.ui.theme.RedeAntiSocialTardeTheme
 
 @Composable
 fun LogoLogin(
@@ -35,12 +34,11 @@ fun LogoLogin(
 ) {
     Image(
         painter = painterResource(id = logo),
-        contentDescription = "Logo da tela de login",
-        modifier = modifier.height(150.dp)
+        contentDescription = "Logotipo do Login",
+        modifier = modifier.size(200.dp)
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyTextField(
     label: String,
@@ -49,11 +47,11 @@ fun MyTextField(
     modifier: Modifier = Modifier
 ) {
     var textValue by remember {
-        mutableStateOf( TextFieldValue("") )
+        mutableStateOf(TextFieldValue(""))
     }
 
     var hidePass by remember {
-        mutableStateOf( true )
+        mutableStateOf(true)
     }
 
     TextField(
@@ -71,11 +69,11 @@ fun MyTextField(
         trailingIcon = {
             if(isPassword) {
                 IconButton(
-                    onClick = { hidePass = !hidePass }
+                    onClick = { hidePass = !hidePass },
                 ) {
                     Icon(
-                        imageVector = if(hidePass) Icons.Outlined.Done else Icons.Outlined.Clear,
-                        contentDescription = "Ícone para esconder a senha"
+                        imageVector = if (hidePass) Icons.Rounded.Clear else Icons.Rounded.Done,
+                        contentDescription = "Ícone de senha"
                     )
                 }
             } else {
@@ -83,22 +81,22 @@ fun MyTextField(
             }
         },
         visualTransformation = if(hidePass)
-                               PasswordVisualTransformation('*')
-                               else
-                               VisualTransformation.None
-    )//TextField
+                                PasswordVisualTransformation('x')
+                                else
+                                VisualTransformation.None
+    )
 }
 
-
 //////////////////////////////////////////////
+
 @Preview
 @Composable
 fun MyTextFieldPreview() {
-    SocialMediaNoiteTheme {
+    RedeAntiSocialTardeTheme {
         MyTextField(
-            label = "Senha",
             isPassword = true,
-            icon = Icons.Outlined.Lock
+            icon = Icons.Filled.AccountCircle,
+            label = "Usuário"
         )
     }
 }
