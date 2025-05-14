@@ -2,13 +2,20 @@ package br.com.redeantisocialtarde
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.Done
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -23,6 +30,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.redeantisocialtarde.ui.theme.RedeAntiSocialTardeTheme
@@ -87,6 +95,62 @@ fun MyTextField(
     )
 }
 
+@Composable
+fun MyButton(
+    label: String,
+    size: Dp,
+    action: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier.width(size)
+    ) {
+        ElevatedButton(
+            onClick = action,
+            modifier = modifier.fillMaxWidth()
+        ) {
+           Text(text = label)
+        }
+    }
+}
+
+@Composable
+fun MySwitch(
+    label: String,
+    isChecked: Boolean,
+    onChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row {
+        Switch(
+            checked = isChecked,
+            onCheckedChange = onChange
+        )
+
+        Spacer(
+            modifier = modifier.width(6.dp)
+        )
+
+        Text(text = label)
+    }
+}
+
+@Composable
+fun MySwitchState(
+    label: String = "Mantenha-me conectado",
+    modifier: Modifier = Modifier
+) {
+    var changeSwitch by remember {
+        mutableStateOf(false)
+    }
+
+    MySwitch(
+        label = label,
+        isChecked = changeSwitch,
+        onChange = { changeSwitch = !changeSwitch }
+    )
+}
+
 //////////////////////////////////////////////
 
 @Preview
@@ -97,6 +161,17 @@ fun MyTextFieldPreview() {
             isPassword = true,
             icon = Icons.Filled.AccountCircle,
             label = "Usuário"
+        )
+    }
+}
+
+@Preview
+@Composable
+fun MyButtonPreview() {
+    RedeAntiSocialTardeTheme {
+        MyButton(
+            size = 200.dp,
+            label = "Aperte-me"
         )
     }
 }
